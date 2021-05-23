@@ -1,5 +1,6 @@
 basic-component-dependencies
 provisioning
 authentication-and-sessions
-authorization-models-vary
+authorization-models
 access-governance
+risk-context
