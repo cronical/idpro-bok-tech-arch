@@ -4,3 +4,4 @@ authentication-and-sessions
 authorization-models
 access-governance
 risk-context
+metadata-discovery

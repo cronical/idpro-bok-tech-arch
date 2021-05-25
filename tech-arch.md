@@ -11,14 +11,16 @@ The most basic function of the identity system is to provide secure storage of t
 
 While, it is possible to have an identity management system without attaching it to external data, this is typically not the case. Usually employee or customer data needs to be imported.
 
-The model can be used at different levels.  For instance, a modern architecture may have a web-hosted application that calls on an Identity as a Service (IDaaS) cloud provider, which acts as the Identity Management System.  In another example, a file system grants access to users based on the user information acquired at login.  Despite both these functions being encapsulated in an operating system, the model holds.
+The model can be used at different levels.  For instance, a modern architecture may have a web-hosted application that calls on an Identity as a Service (IDaaS) cloud provider, which acts as the Identity Management System.  
+
+In another example, a file system grants access to users based on the user information acquired at login.  Despite both the file system and the identity management function being encapsulated in an operating system, the model holds.
 
 We will add on more detail during the next several sections.
 
 ## Provisioning
 Provisioning describes how the data gets into the identity repository and how it flows further on to support authorization decisions.
 
-Note that the Identity Information Source can be singular, such as a single HR system.  Or it can plural, for instance in the case of a company that has, say, more than one HR system.
+Note that the Identity Information Source can be singular, such as a single HR system.  Or it can plural, for instance in the case of a company that has, say, more than one HR system.  
 
 Also note, that the notion of importing does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
 
@@ -39,30 +41,40 @@ A common pattern is to associate the authentication event with the start of a se
 
 The session can play an important role in step-up authentication.  The session can keep track of the level of assurance of a particular authentication, so when a relying service has a sensitive transaction needing step-up authentication, the identity management system can be prepared to determine the course of action.  This could be done at the relying system, but that would end up with a poor user experience if multiple relying systems with step-up needs were in play.
 
-The existence of a centralized point of view about sessions, can be leveraged for advanced scenarios which include external risk facts. See Risk Context below.
+The existence of a centralized point of view about sessions, can be leveraged to support good security practices. For example, if session management becomes aware of a terminated account it could end an active session. This could also occur in advanced scenarios which include external risk facts. See Risk Context below.
 
 ![](resources/authentication-and-sessions.png)
+
 ## Authorization models 
 Authorization models vary alot. The diagram shows two alternative approaches for authorization.
 
-Both approaches typically use user attributes help determine access.  These values can be provisioned into a local store, as described above in Provisioning.  Or the values can be acquired at run-time from the Identity Management System. 
+Both approaches typically use user attributes help determine access.  These values can be provisioned into a local store, as described above in Provisioning.  Or the values can be acquired at run-time from the Identity Management System as shown by the attribute query.
 
 Many relying services perform authorization tasks internally.  The local nature of the protected resources often makes this appealing.  
 
-Sometimes authorization is a shared resource for many relying services.  
+Sometimes authorization is a shared resource for many relying services.  This design can improve consistency of authorization decisions.
 
 ![](resources/authorization-models.png)
+
 ## Access governance
 Access Governance provides oversight and control over access rights implemented in many local or shared authorization systems.  Both of these may rely on user attributes such as groups or roles stored in an Identity Register. 
 
 Typically, goverance activities review and may modify the data in one or more of the authorization components in order to effect a change in entitlements.
 
-This is frequently implemented in enterprise systems focusing of employee/contractor entitlements.  However, the concept can also apply to customer facing scenarios such as busines to business delegated rights or business to customer scenarios where delegation such as power of attorney or other agents are implemented.
+This is frequently implemented in enterprise systems focusing of employee/contractor entitlements.  However, the concept can also apply to customer facing scenarios such as business to business delegated rights or business to customer scenarios where delegation such as power of attorney or other agents are implemented.
 
 ![](resources/access-governance.png)
+
 ## Risk Context
 Risk context information can be valuable to improve the security of the relying service.  External events may be visiable to the Identity Management System operator through consortia or vendor packages.  In some mutual-support scenarios, it may be possible for the operator to also publish events for the benefit of others.
 
 Events need to be delivered into the Identity Management System so that they can selectively be used to modify the behavior of the authentication function.  In some severe scenarios it may be desirable to attach the events to the session management function so that current sessions can be reviewed and terminated if needed.
 
 ![](resources/risk-context.png)
+
+## Metadata and Discovery
+Metadata here is meant to convey the idea of control data that allows the Identity Management System to recognize and trust the Relying Service.  The inverse is also true, but the metadata of the Relying System is not shown. This may include information that limits the types of interactions and scope of data that is exchanged.  It also frequently contains security information to allow the counterparties to authenticate each other.  For instance public key components such as certificates with a common trust root are frequently used.
+
+Discovery [Need help here]
+
+![](resources/metadata-discovery.png)
