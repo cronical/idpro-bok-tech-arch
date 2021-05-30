@@ -1,7 +1,7 @@
 See tech-arch.md for purpose
 
 The main document is tech-arch.md
-It incomporates the png versions of the graphic model
+It incorporates the png versions of the graphic model
 
 The graphic model is built using the drawio tool. It is layered. 
 
