@@ -1,0 +1,3 @@
+#!/bin/zsh
+#create MS Word file from the markdown
+pandoc -o output/tech-arch.docx --data-dir=resources/reference.docx tech-arch.md

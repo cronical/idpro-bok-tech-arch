@@ -1,13 +1,18 @@
 # Technical Architecture Model
 ## Abstract
-This document provides a model to organize the presentation of technical details associated with various implementations of the architectural concepts.  This article provides the set of generic components which are exemplified below.  It is a restatement/extension of the ISO framing. It is simplified to remove the UML fine points, which the typical reader, may not find helpful. The extension allows authorization and governance can be included. Another extension shows how external risk context can be incorporated into the identity management system. 
+This document provides a model to organize the presentation of technical details associated with various implementations of the architectural concepts.  This article provides the set of generic components which are exemplified in subsequent articles with focus on specific technical use-cases. Each such use-case will indicate which of the abstract components are involved in a particular implementation.
+During the draft phase of this document an appendix is provided to elaborate on that these use-case might be and look like.
+
+The model is a restatement/extension of the ISO/IEC framing. It is simplified to remove the UML fine points, which the typical reader, may not find helpful. And it is extened so that authorization, governance and risk-control can be included. 
+
+The model has been compared to the FICAM, Internet 2, and NIST Zero Trust models.  This comparision caused the author to make some useful adjustments.
 
 ## Introduction
 The following is the basic organization of an identity management system, which supports multiple relying services.
 
 ![](resources/basic-component-dependencies.png)
 
-The most basic function of the identity system is to provide secure storage of the information about identities.  The audit repository is shown since that is perhaps one of the most salient aspects of providing that security. 
+The most basic function of the identity system is to provide secure storage of the information about identities and a way for relying services to use that data to control access to resources.  The audit repository is shown since that is perhaps one of the most salient aspects of providing that security. 
 
 While, it is possible to have an identity management system without attaching it to external data, this is typically not the case. Usually employee or customer data needs to be imported.
 
@@ -17,10 +22,27 @@ In another example, a file system grants access to users based on the user infor
 
 We will add on more detail during the next several sections.
 
+## Terminology
+
+|Term (long)|Term (short) | Definition |
+|---|---|---|
+|Identity Management System | IMS | A set of policies, procedures, technology, and other resources for maintaining identity information.  In this model it contains information about princpals/subjects including credentials.  It also including other data such as meta data to enable interoperability with other components.|
+|Relying Service|RS|A component, system or application that uses the IMS to identify its users. The RS has its own resources and logic. This roughly corresponds to the Agency Endpoint in the FICAM model, to Identity Consumers in the Internet2 model.|
+|Authoritative Sources|AS|This represents one or more data sources that are used to by the IMS as the basis for the master set of principal/subject records. Each AS may supply a subset of records and a subset of attributes.  This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2|
+|Principal & Credential Mgmt|PCM|This follows the ISO model where the proofing, credentialing, and lifecycle aspects are considered a subfunction of the IMS.  FICAM separates this into a first class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.|
+|Authentication|AuthN|The act of determining that the principal/subject is authentic to a level of assurance.  In this model this is shown as a collaborative activity between the IMS and the RS. The FICAM model, at a more abstract level, includes this in the first class component called Access Management.|
+|Session|Sess|A period of time after an authentication event when an RS grants access to the principal/subject.|
+|Authorization|AuthZ|Authorization is how a decision is made to allow someone to access a resource. This is not included in the ISO or Internet 2 models.  The FICAM includes this as a subcomponent of the Access Management System. This model is more explicit about the location of the implementation of the authorization |
+|Access Governance|AG|Access Governance provides oversight and control over access rights implemented in many local or shared authorization systems.  This roughly corresponds to the Access Certification section of the first class component Governance Systems in the FICAM model. AG is not included in the ISO/IEC model.|
+|Risk Context|RC|Risk Context consists of additional facts that can be brought to bear to improve the overall security of the ecosystem. Internal or external events and facts can be applied to enable, limit, or terminate access.  This is similar to the section Monitors and Sensors under FICAM's Governance Systems, and, NIST 800-207 (Zero Trust) to many of the inputs of the Policy Decsion Point as shown in Figure 2.|
+|Metadata|meta|Control data that allows the Identity Management System to recognize and trust the Relying Service.  This corresponds to Relying Party data in the Internet 2 model.|
+
+
+
 ## Provisioning
 Provisioning describes how the data gets into the identity repository and how it flows further on to support authorization decisions.
 
-Note that the Identity Information Source can be singular, such as a single HR system.  Or it can plural, for instance in the case of a company that has, say, more than one HR system.  
+Note that the Authoritative Source can be singular, such as a single HR system.  Or it can plural, for instance in the case of a company that has, say, more than one HR system.  
 
 Also note, that the notion of importing does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
 
@@ -45,14 +67,14 @@ The existence of a centralized point of view about sessions, can be leveraged to
 
 ![](resources/authentication-and-sessions.png)
 
-## Authorization models 
+## Authorization 
 Authorization models vary alot. The diagram shows two alternative approaches for authorization.
 
-Both approaches typically use user attributes help determine access.  These values can be provisioned into a local store, as described above in Provisioning.  Or the values can be acquired at run-time from the Identity Management System as shown by the attribute query.
+Both approaches typically use subject attributes help determine access.  These values can be provisioned into a local store, as described above in Provisioning.  Or the values can be acquired at run-time from the Identity Management System as shown by the attribute query.
 
 Many relying services perform authorization tasks internally.  The local nature of the protected resources often makes this appealing.  
 
-Sometimes authorization is a shared resource for many relying services.  This design can improve consistency of authorization decisions.
+Sometimes authorization is a shared resource for many relying services.  This design can improve consistency of authorization decisions and it allows a feasible way for organizations to include advanced access decisions strategies such as "Zero Trust" as described by NIST 800-207.
 
 ![](resources/authorization-models.png)
 
@@ -70,6 +92,10 @@ Risk context information can be valuable to improve the security of the relying 
 
 Events need to be delivered into the Identity Management System so that they can selectively be used to modify the behavior of the authentication function.  In some severe scenarios it may be desirable to attach the events to the session management function so that current sessions can be reviewed and terminated if needed.
 
+The diagram also shows that shared authorization systems may consume risk data as well.  For example an authorization might be denied if the subject's recent history is outside of normal bounds, indicating a compromised credential. Logically this could happen with local authorization as well, but it may be harder to get that implemented and so is not shown.
+
+The linkage from the IMS Audit Repository is intended to show that the Risk Contex consumes that as one of many inputs to the trust algorithm. (see NIST 800-207).
+
 ![](resources/risk-context.png)
 
 ## Metadata and Discovery
@@ -78,3 +104,62 @@ Metadata here is meant to convey the idea of control data that allows the Identi
 Discovery [Need help here]
 
 ![](resources/metadata-discovery.png)
+
+## References
+1. ISO/IEC 24760-2:2015(E) 
+2. FICAM https://playbooks.idmanagement.gov/arch/components/
+3. Internet 2 https://playbooks.idmanagement.gov/arch/components/
+4. NIST Zero Trust https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf
+
+## Appendix - Use Cases
+This appendix will be removed once use-case list is finalized and first few are written.
+
+Each article describes a single use-case as implemented in a particular architecture to illustrate a set of components and how they are connected and interact to perform the use-case.  These articles are grouped by the functions defined in the model.
+
+To retain context from  "Introduction to IAM Architecture," IDPro Body of Knowledge" the article will indicate what architecture type(s) the use case applies to.
+
+The use-case articles follow a common structure:
+
+   - Use-case name
+   - Architecture Type or types Host, Client-Server, N-tier, Hub & Spoke, Remote Access, Cloud Environments
+   - Short description
+   - Actors, components and connectors included (with a diagram).  
+      - The components and connectors refer to the abstract architectural components and their implementations in this use-case.
+   - Prerequisites
+   - Exposition on how the components work together and some level of detail deemed by the author appropriate for the reader
+   - Where to find more information on this and adjacent use-cases
+
+Example: of a use-case.  This example is chosen to indicate how constrained these articles are intended to be.  There could be quite a few variations on Windows login.  
+
+   Name: Employee logs in to Windows domain - Kerberos
+   Short Description: Interactive domain login using password (Kerberos)
+   Architecture Type: Client-Server
+   Description: An existing employee logs into the corporate Windows environment with a password.
+   Actors/Components: User (employee), network attached computer running Windows 10, Microsoft Active Directory (IDENTITY REGISTER),  Kerberos protocol (AUTHENTICATION)
+
+### List of use-cases 
+
+The list of use-case articles is intended to grow over time. [seeded 5/20/21 - discuss with cmte for more]
+
+#### Function: Authentication
+
+1. Employee logs in to Windows domain - Kerberos
+1. Customer logs in from web browser - OpenID Connect
+1. Cloud service authenticates via delegation - SAML
+
+#### Function: Provisioning
+
+1. Directory absorbs changed people information from HR - LDAP
+1. Directory synchronizes with downstream resource - SCIM
+
+#### Function: Attribute Exchange
+
+1. Attributes are provided in assertion - SAML
+2. Attributes are requested - OpenID Connect
+
+#### Function: Authorization
+
+1. File system authorizes access - Windows
+2. Application authorizes based on attributes - custom
+3. Application delegates to policy service - OAuth
+4. Cloud service authorizes based on role assumed from single signon - Cloud
