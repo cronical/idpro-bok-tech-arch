@@ -1,0 +1,11 @@
+#!/bin/zsh
+#convert work.docx to work.md (after an editing session in Word, for instance)
+#assumes the graphics are the same set and in the same order as original 
+#
+pandoc --wrap none -s work.docx -t markdown -o work.md
+let counter=1
+cat figures.txt | while IFS= read line; do
+  cmd="s|"media/image$counter.png"|"resources/$line.png"|"
+  sed -i bak $cmd work.md
+  let counter++
+done
