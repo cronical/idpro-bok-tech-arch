@@ -82,9 +82,11 @@ Control data that allows the Identity Management System to recognize and trust t
 Provisioning
 ------------
 
-Provisioning describes how the data gets into the identity repository and how it flows further on to support authorization decisions.
+Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these methods the data gets into the identity repository.  Often provisioing needs to extend to applications  to support authorization decisions.
 
 Note that the Authoritative Sources for identity attributes transcend the HR system and may include the email system, phone system, training certification etc. In some cases, a company may have more than one HR system.
+
+The act of provisioning may include certain logic, best modeled as governance.  In some cases the IGA system actually takes on all the provisioning duties.
 
 Also note, the notion of importing data does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
 
@@ -93,6 +95,8 @@ The Identity Register could be implemented in several ways. Common methods inclu
 Also shown, is the Principal and Credential Management function. This is intended to include steps needed to originate an identity (such as proofing or vetting) as well as on-going maintenance such as password reset and other credential management activities such as token provisioning. This function includes administrative activities and self-serve activities.
 
 Also noted is the function of propagating selected information further into the ecosystem. This typically occurs when a relying services needs additional information about the users, e.g. for the purpose of access control, or personalization. The relying system makes a copy of the identity data and that is used in the application processes. A complete solution will allow for the full lifecycle including creation, update and eventual deletion of the identity data stored locally.
+
+So far, the provisioning function is restricted to "admin-time".  However, there are some cases where provisioning occurs at run time. 
 
 Not shown here, but sometimes implemented, are provisioning actions that occur on a just-in-time basis. This can happen when additional identity information is passed to a relying service in real-time to support a specific application requirement, possibly including identity attributes. A similar case involves the relying service querying the identity management system in order to acquire attributes.
 
