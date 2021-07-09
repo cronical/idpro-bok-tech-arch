@@ -4,39 +4,48 @@ IAM Reference Architecture Model
 Abstract
 --------
 
-This document provides a reference model to organize the presentation of technical details associated with various implementations of identity and access management (IAM) architectural concepts. This article provides the set of generic components which are exemplified in subsequent articles with focus on specific technical use-cases. Each such use-case indicates which of the abstract components comprise a particular implementation (during the draft phase of this document an appendix is provided to elaborate on these use-cases).
+This article provides a reference model to organize the presentation of technical details associated with various implementations of identity and access management (IAM) architectural concepts. The model is conceptual, as are the set of abstract components which it provides. 
 
-The model is a restatement/extension of the ISO/IEC framing., Some UML detail has been removed for simplicity. The IAM model has been extended so that authorization, governance and risk-control can be included.
+To move out of the conceptual realm into specifics additional articles follow, each with a focus on a specific technical use-cases. Each such use-case indicates which of the abstract components comprise a particular implementation 
+
+The model is a restatement/extension of the ISO/IEC framing. Some UML detail has been removed for simplicity. The IAM model has been extended so that authorization, governance and risk-control can be included.
+
+Some of the ISO/IEC names have been changed to reflect more common usage.
 
 The model has been reviewed in conjunction with the FICAM, Internet 2, and NIST Zero Trust frameworks.
 
 Introduction
 ------------
 
-The following is the basic organization of an identity management system, supporting multiple relying services.
+The following is the basic organization of an identity management system (IMS), supporting multiple relying services, or relying parties (RP).
 
 ![Diagram Description automatically generated](resources/basic-component-dependencies.png){width="6.268055555555556in" height="4.636805555555555in"}
 
-The most basic function of the identity system is to provide secure storage of the information about identities and a way for relying services to use that data to control access to resources. Note that the term Relying Service is used to encompass all types of components that use identity services, including systems, sub-systems, and applications, independent of the domain or operator. The audit repository is shown since that is perhaps one of the most salient aspects of providing that security.
+The most basic function of the identity system is to provide secure storage of the information about identities and a way for relying  parties, to use that data to control access to resources. Note that the term Relying Service is used by ISO/IEC to encompass all types of components that use identity services, including systems, sub-systems, and applications, independent of the domain or operator.  We will use the more common Relying Party (or RP).
+
+The audit repository is shown since that is perhaps one of the most salient aspects of providing that security.
 
 While, it is possible to have an identity management system that is populated without attaching to an external data service, this is typically not the case. Usually, employee or customer data needs to be imported.
 
-The model can be used at different levels. For instance, a modern architecture may have a web-hosted application that calls an Identity as a Service (IDaaS) cloud identity service, acting as the Identity Management System.
+The model can be used at different levels. Here are a couple of examples:
+#### Example 1
+A modern architecture may have a web-hosted application (the RP) that calls an Identity as a Service (IDaaS) cloud identity service, acting as the Identity Management System.
 
-In another example, a computer's file system provides access control based on the user information acquired at login. Despite both the file system and the identity management function being encapsulated in an operating system, the model holds.
-
-More detail is provided in the next sections.
+#### Example 2
+A computer's file system (RP) provides access control based on the user information acquired at login (IMS). Despite both the file system and the identity management function being encapsulated in an operating system, the model holds.
 
 Terminology
 -----------
+
+The terms are defined below and provided with abbreviations to facilitate reference in the use-cases.
 
 ### Identity Management System (IMS)
 
 A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components.
 
-### Relying Service (RSVC)
+### Relying  Party (RP)
 
-A component, system or application that uses the IMS to identify its users. The RSVC has its own resources and logic. This roughly corresponds to the Agency Endpoint in the FICAM model, or to Identity Consumers in the Internet2 model.
+A component, system or application that uses the IMS to identify its users. The RP has its own resources and logic. This is also known as the Relying Service in the ISO/IEC model. This roughly corresponds to the Agency Endpoint in the FICAM model, or to Identity Consumers in the Internet2 model.
 
 ### Authoritative Sources (ASRC)
 
@@ -58,9 +67,9 @@ A period of time after an authentication event when an RSVC grants access to the
 
 Authorization is how a decision is made to allow someone to access a resource. This is not included in the ISO or Internet 2 models. The FICAM framework includes this as a subcomponent of the Access Management System and is more explicit about the location of the implementation of the authorization
 
-### Access Governance (AGOV)
+### Access Governance (IGA)
 
-Access Governance provides oversight and control over access rights implemented by relying systems using dedicated or shared authorization systems. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. AG is not specifically addressed in the ISO/IEC model.
+Access governance provides oversight and control over access rights implemented by relying systems using dedicated or shared authorization systems. The abbreviation used is for Identity Governance and Administration and is commonly used in the commercial sector. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. IGA is not specifically addressed in the ISO/IEC model.
 
 ### Risk Context (RCTX)
 
@@ -158,67 +167,3 @@ References
 3.  Internet 2 [[https://playbooks.idmanagement.gov/arch/components/]{.underline}](https://playbooks.idmanagement.gov/arch/components/)
 
 4.  NIST Zero Trust [[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf]{.underline}](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf)
-
-Appendix - Use Cases
---------------------
-
-Each article describes a single use-case as implemented in a particular architecture to illustrate a set of components and how they are connected and interact to perform the use-case. These articles are grouped by the functions defined in the model.
-
-To retain context from \"Introduction to IAM Architecture,\" IDPro Body of Knowledge\" the article will indicate what architecture type(s) the use case applies to.
-
-The use-case articles follow a common structure:
-
--   Use-case name
-
--   Architecture Type or types Host, Client-Server, N-tier, Hub & Spoke, Remote Access, Cloud Environments
-
--   Short description
-
--   Actors, components and connectors included (with a diagram).
-
-    -   The components and connectors refer to the abstract architectural components and their implementations in this use-case.
-
--   Prerequisites
-
--   Exposition on how the components work together and some level of detail deemed by the author appropriate for the reader
-
--   Where to find more information on this and adjacent use-cases
-
-Example: of a use-case. This example is chosen to indicate how constrained these articles are intended to be. There could be quite a few variations on Windows login.
-
-Name: Employee logs in to Windows domain - Kerberos Short Description: Interactive domain login using password (Kerberos) Architecture Type: Client-Server Description: An existing employee logs into the corporate Windows environment with a password. Actors/Components: User (employee), network attached computer running Windows 10, Microsoft Active Directory (IDENTITY REGISTER), Kerberos protocol (AUTHENTICATION)
-
-### List of use-cases
-
-The list of use-case articles is intended to grow over time. \[seeded 5/20/21 - discuss with cmte for more\]
-
-#### Function: Authentication
-
-1.  Basic *nix login with password (examines password hashes)
-2.  Employee logs in to Windows domain - Kerberos
-
-2.  Customer logs in from web browser - OpenID Connect
-
-3.  Cloud service authenticates via delegation - SAML
-
-#### Function: Provisioning
-
-1.  Directory absorbs changed people information from HR - LDAP
-
-2.  Directory synchronizes with downstream resource - SCIM
-
-#### Function: Attribute Exchange
-
-1.  Attributes are provided in assertion - SAML
-
-2.  Attributes are requested - OpenID Connect
-
-#### Function: Authorization
-
-1.  File system authorizes access - Windows
-
-2.  Application authorizes based on attributes - custom
-
-3.  Application delegates to policy service - OAuth
-
-4.  Cloud service authorizes based on role assumed from single signon - Cloud
