@@ -49,7 +49,7 @@ A component, system or application that uses the IMS to identify its users. The 
 
 ### Identity Information Authority (IIA)
 
-This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.  Sometimes the authority for attributes is distinguished from the authority for identities.  Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
+This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.  Sometimes the authority for attributes is distinguished from the authority for identities.  In this case the term Attribute Provider is sometimes used.  Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
 
 ### Enrolment 
 Also known as Registration. Enrolment is concerned with  the proofing, and lifecycle aspects of the principal (or subject).  The entity that performs enrolment is known as a Registration Authority.
