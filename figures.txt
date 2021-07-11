@@ -1,7 +1,7 @@
-basic-component-dependencies
-provisioning
-authentication-and-sessions
-authorization-models
-access-governance
-risk-context
-metadata-discovery
+basic-component-dependencies (background, dependency, border-small)
+provisioning (background, enrolment, provisioning, governance, border-large)
+authentication-and-sessions (background, authN-session, border-small)
+authorization-models (background, authz, border-large)
+access-governance (background, enrolment, governance, authz, border-large)
+risk-context (background, enrolment, authN-session,authz border-large)
+metadata-discovery (background, metadata-discovery, border-small)

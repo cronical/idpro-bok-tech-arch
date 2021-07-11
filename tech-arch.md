@@ -8,9 +8,9 @@ This article provides a reference model to organize the presentation of technica
 
 To move out of the conceptual realm into specifics additional articles follow, each with a focus on a specific technical use-cases. Each such use-case indicates which of the abstract components comprise a particular implementation 
 
-The model is a restatement/extension of the ISO/IEC framing. Some UML detail has been removed for simplicity. The IAM model has been extended so that authorization, governance and risk-control can be included.
+The model is a restatement/extension of the ISO/IEC framing [Note 1]. Some UML detail has been removed for simplicity. The IAM model has been extended so that authorization, governance and risk-control can be included.
 
-Some of the ISO/IEC names have been changed to reflect more common usage.
+Some of the ISO/IEC names have been changed to reflect more common usage. In come cases, the ISO names have been used in a way that is more expansive than their definition.
 
 The model has been reviewed in conjunction with the FICAM, Internet 2, and NIST Zero Trust frameworks.
 
@@ -29,7 +29,7 @@ While, it is possible to have an identity management system that is populated wi
 
 The model can be used at different levels. Here are a couple of examples:
 #### Example 1
-A modern architecture may have a web-hosted application (the RP) that calls an Identity as a Service (IDaaS) cloud identity service, acting as the Identity Management System.
+A modern architecture may have a web-hosted application (the RP) that calls an Identity as a Service (IDaaS) cloud identity service, acting as the Identity Management System. The RP in this case could be a customer facing application or a workforce facing application.
 
 #### Example 2
 A computer's file system (RP) provides access control based on the user information acquired at login (IMS). Despite both the file system and the identity management function being encapsulated in an operating system, the model holds.
@@ -41,19 +41,25 @@ The terms are defined below and provided with abbreviations to facilitate refere
 
 ### Identity Management System (IMS)
 
-A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components.
+A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components.  The IMS is shown with a dotted line to indicate that it is a conceptual grouping of components, not a full fledged system in itself.
 
 ### Relying  Party (RP)
 
 A component, system or application that uses the IMS to identify its users. The RP has its own resources and logic. This is also known as the Relying Service in the ISO/IEC model. This roughly corresponds to the Agency Endpoint in the FICAM model, or to Identity Consumers in the Internet2 model.
 
-### Authoritative Sources (ASRC)
+### Identity Information Authority (IIA)
 
-This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each AS may supply a subset of records and a subset of attributes. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2
+This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.  Sometimes the authority for attributes is distinguished from the authority for identities.  Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
 
-### Principal& Credential Mgmt (PCM)
+### Enrolment 
+Also known as Registration. Enrolment is concerned with  the proofing, and lifecycle aspects of the principal (or subject).  The entity that performs enrolment is known as a Registration Authority.
 
-This follows the ISO model where the proofing, and lifecycle aspects of the principal (or subject) together with the process of credentialing are considered a subfunction of the IMS. FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.
+### Credential Service Provider (CSP)
+A credential allows for authentication of an entity.  The Credential Service Provider is here meant to include the issuer as well as an subsequent management of the credentials.  FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.
+
+### Identity Register
+
+This is the data store that contains the enroled entities, and their attributes.  We use this to include the storage related to credentials, although in practice, all or some of the credentials may be stored in their own physical repository.  
 
 ### Authentication (AUTHN)
 
@@ -82,11 +88,11 @@ Control data that allows the Identity Management System to recognize and trust t
 Provisioning
 ------------
 
-Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these methods the data gets into the identity repository.  Often provisioing needs to extend to applications  to support authorization decisions.
+Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these method, records are created, or updated in the identity repository, and removed from it.  Often, provisioing needs to extend to applications  to support authorization decisions.
 
-Note that the Authoritative Sources for identity attributes transcend the HR system and may include the email system, phone system, training certification etc. In some cases, a company may have more than one HR system.
+Note that the authoritative sources for identity attributes transcend the HR system and may include the email system, phone system, training certification etc. In some cases, a company may have more than one HR system.
 
-The act of provisioning may include certain logic, best modeled as governance.  In some cases the IGA system actually takes on all the provisioning duties.
+The act of provisioning may include certain logic, best modeled as governance.  In some cases the IGA system actually takes on all the provisioning duties. 
 
 Also note, the notion of importing data does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
 
@@ -164,7 +170,7 @@ Discovery is a service relying parties need to identify where a user's identity 
 References
 ----------
 
-1.  ISO/IEC 24760-2:2015(E)
+1. ISO/IEC 24760-2:2015(E) Figure C.1 provided the starting point.  ISO/IEC 24760-1 Second edition provided improved naming and granularity (specifically breaking out CSP and Enrolment)
 
 2.  FICAM [[https://playbooks.idmanagement.gov/arch/components/]{.underline}](https://playbooks.idmanagement.gov/arch/components/)
 
