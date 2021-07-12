@@ -49,13 +49,27 @@ A component, system or application that uses the IMS to identify its users. The 
 
 ### Identity Information Authority (IIA)
 
-This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.  Sometimes the authority for attributes is distinguished from the authority for identities.  In this case the term Attribute Provider is sometimes used.  Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
+This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.   Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
 
-### Enrolment 
-Also known as Registration. Enrolment is concerned with  the proofing, and lifecycle aspects of the principal (or subject).  The entity that performs enrolment is known as a Registration Authority.
+### Attribute Provider
+
+A type of IIA. Sometimes the authority for attributes is distinguished from the authority for identities.  In this case the term Attribute Provider is sometimes used. 
+
+### Enrollment 
+
+Also known as Registration. Enrollment is concerned with  the proofing, and lifecycle aspects of the principal (or subject).  The entity that performs enrollment has sometimes been known as a Registration Authority, but we (following NIST) will use the term Credential Service Provider.
+
+### Credential
+
+A credential allows for authentication of an entity by binding an identity to an authenticator.  
+
+### Credential Services
+
+Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.
 
 ### Credential Service Provider (CSP)
-A credential allows for authentication of an entity.  The Credential Service Provider is here meant to include the issuer as well as an subsequent management of the credentials.  FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.
+
+Following NIST 800-63-3 we include both the enrollment function and credential services together under the name Credential Services Provider.
 
 ### Identity Register
 
