@@ -162,9 +162,11 @@ Access Governance is required in enterprise systems focusing on management of st
 Risk Context
 ------------
 
-Risk context information can be valuable to improve the security of the relying service. External events may be visible to the Identity Management System operator through consortia or vendor packages. In some mutual-support scenarios, it may be possible for the IMS operator to also publish events for the benefit of others, supporting a relying party's risk management requirement.
+Risk context information can be valuable to improve the security of the relying service. To make this clearer consider an example. It is possible to determine commonly used passwords based on postings on the "dark-web".   Bad actors purchase these in the hope that users will use the same password at other sites.  A counter measure would be for the Identity Management System operator to require additional certainty if one of those passwords were presented.
 
-Events need to be delivered into the Identity Management System so that they can selectively be used to modify the behavior of the authentication function. In some severe scenarios it may be desirable to attach the events to the session management function so that current sessions can be reviewed and terminated if needed.
+External events may be visible to the Identity Management System operator through consortia or vendor packages. In some mutual-support scenarios, it may be possible for the IMS operator to also publish events for the benefit of others, supporting a relying party's risk management requirement.
+
+Events need to be delivered into the Identity Management System so that they can selectively be used to modify the behavior of the authentication function. In some severe scenarios it may be desirable to attach the events to the session management function so that current sessions can be reviewed and terminated if needed. The OpenID Shared Signals and Events working group is developing standard ways to deliver these signals.
 
 As shown in the diagram, shared authorization systems may consume risk data as well. For example, an authorization might be denied if the subject\'s recent activity history is outside of normal bounds, possibly indicating a compromised credential. Logically this could happen with local authorization as well, but this is not shown.
 
