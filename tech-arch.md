@@ -89,7 +89,7 @@ Authorization is how a decision is made to allow someone to access a resource. T
 
 ### Access Governance (IGA)
 
-Access governance provides oversight and control over access rights implemented by relying systems using dedicated or shared authorization systems. The abbreviation used is for Identity Governance and Administration and is commonly used in the commercial sector. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. IGA is not specifically addressed in the ISO/IEC model.
+Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identies.  The abbreviation used is for Identity Governance and Administration and is commonly used in the commercial sector. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. IGA is not specifically addressed in the ISO/IEC model.
 
 ### Risk Context (RCTX)
 
@@ -151,7 +151,7 @@ Sometimes authorization is a shared resource for many relying services. This des
 Access governance
 -----------------
 
-Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These may rely on user attributes such as group memberships or roles stored in an Identity Register.
+Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identies. Some controls rely on user attributes including group memberships or roles stored in an Identity Register. Broadly speaking, the controls may also include methods such as procedures and workflows to ensure proper review.
 
 Typically, governance activities review and may modify the data in one or more of the authorization components in order to effect a change in entitlements.
 
