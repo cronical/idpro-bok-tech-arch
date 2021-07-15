@@ -65,7 +65,7 @@ A credential allows for authentication of an entity by binding an identity to an
 
 ### Credential Services
 
-Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation, which this model indicates under metadata and discovery.
+Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation.  We follow FICAM in this model: so the subscriber will include system components that need certificates and private keys.  We also place the function known as Security Token Service here, including services that translate one type of token into another.
 
 ### Credential Service Provider (CSP)
 
@@ -148,10 +148,12 @@ Sometimes authorization is a shared resource for many relying services. This des
 
 ![Diagram Description automatically generated](resources/authorization-models.png){width="6.268055555555556in" height="5.809027777777778in"}
 
-Access governance
+Access governance (IGA)
 -----------------
 
-Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identies. Some controls rely on user attributes including group memberships or roles stored in an Identity Register. Broadly speaking, the controls may also include methods such as procedures and workflows to ensure proper review.
+Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identities. Some controls rely on user attributes including group memberships or roles stored in an Identity Register. Broadly speaking, the controls may also include methods such as procedures and workflows to ensure proper review.
+
+Often deployed to prevent internal fraud is the control labeled segregation of duties.  The control defines groups of access rights that cannot be held by the same person.  This is best done in a location that has visability to all the implicated access rights, i.e. the IGA system.
 
 Typically, governance activities review and may modify the data in one or more of the authorization components in order to effect a change in entitlements.
 
@@ -162,7 +164,9 @@ Access Governance is required in enterprise systems focusing on management of st
 Risk Context
 ------------
 
-Risk context information can be valuable to improve the security of the relying service. To make this clearer consider an example. It is possible to determine commonly used passwords based on postings on the "dark-web".   Bad actors purchase these in the hope that users will use the same password at other sites.  A counter measure would be for the Identity Management System operator to require additional certainty if one of those passwords were presented.
+Risk context information can be valuable to improve the security of the relying service. For example, An authentication or authorization decision may be influenced by specific criteria such as whether an the request is coming from a known or unknown network, or if it is outside the normal usage patterns for a given individual. 
+
+Such an example depends on signals from the local environment, but it is also possible to obtain signals from further afield.  For example,it is possible to determine commonly used passwords based on postings on the "dark-web".   Bad actors purchase these in the hope that users will use the same password at other sites.  A counter measure is for the Identity Management System operator to require additional certainty if one of those passwords were presented.
 
 External events may be visible to the Identity Management System operator through consortia or vendor packages. In some mutual-support scenarios, it may be possible for the IMS operator to also publish events for the benefit of others, supporting a relying party's risk management requirement.
 
