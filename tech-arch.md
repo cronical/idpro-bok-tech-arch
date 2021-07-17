@@ -8,11 +8,11 @@ This article provides a reference model to organize the presentation of technica
 
 To move out of the conceptual realm into specifics additional articles follow, each with a focus on a specific technical use-cases. Each such use-case indicates which of the abstract components comprise a particular implementation 
 
-The model is a restatement/extension of the ISO/IEC framing [Note 1]. Some UML detail has been removed for simplicity. The IAM model has been extended so that authorization, governance and risk-control can be included.
+The model is a started with the ISO/IEC framing [Note 1]. The UML detail has been removed for simplicity and the IAM model has been extended so that authorization, governance and risk-control can be included.
 
-Some of the ISO/IEC names have been changed to reflect more common usage. In come cases, the ISO names have been used in a way that is more expansive than their definition.
+Some of the ISO/IEC names have been changed to reflect more common usage. In some cases, the ISO names have been used in a way that is more expansive than their definition.
 
-The model has been reviewed in conjunction with the FICAM, Internet 2, and NIST Zero Trust frameworks.
+The model has been reviewed in conjunction with the FICAM, Internet 2, NIST SP-800-63 definitions, and NIST Zero Trust frameworks and with the Identity Stack presented at Identiverse 2019 in an attempt to adopt the most useful terminology.
 
 Introduction
 ------------
@@ -65,7 +65,7 @@ A credential allows for authentication of an entity by binding an identity to an
 
 ### Credential Services
 
-Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation.  We follow FICAM in this model: so the subscriber will include system components that need certificates and private keys.  We also place the function known as Security Token Service here, including services that translate one type of token into another.
+Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation.  We follow FICAM in this model: so the subscriber will include system components that need certificates and private keys.  
 
 ### Credential Service Provider (CSP)
 
@@ -73,11 +73,11 @@ Following NIST 800-63-3 we include both the enrollment function and credential s
 
 ### Identity Register
 
-This is the data store that contains the enroled entities, and their attributes.  We use this to include the storage related to credentials, although in practice, all or some of the credentials may be stored in their own physical repository.  
+This is the data store that contains the enrolled entities, and their attributes.  In this model we use the singular, as if it were one singular database.  In practice designs may store some attributes separate from identities. We also use this to include the storage related to credentials, although in practice, all or some of the credentials may be stored in their own physical repository.  Identity Registers by their nature have high availability requirements, so often at the physical level they contain multiple instances which are synchronized.  The term Attribute Store is sometimes used as a synonym.
 
 ### Authentication (AUTHN)
 
-The act of determining that the principal/subject is authentic to a level of assurance. In this model this is shown as a collaborative activity between the IMS and the RSVC. The FICAM model, at a more abstract level, includes this in the first-class component called Access Management.
+The act of determining that the principal/subject is authentic to a level of assurance. Depending on the architecture this function may also produce a security token to convey authentication information securely to the RP.
 
 ### Session (SESS)
 
@@ -85,7 +85,15 @@ A period of time after an authentication event when an RSVC grants access to the
 
 ### Authorization (AUTHZ)
 
-Authorization is how a decision is made to allow someone to access a resource. This is not included in the ISO or Internet 2 models. The FICAM framework includes this as a subcomponent of the Access Management System and is more explicit about the location of the implementation of the authorization
+Authorization is how a decision is made at run-time to allow someone to access a resource. This is not included in the ISO or Internet 2 models. The FICAM framework includes this as a subcomponent of the Access Management System and is more explicit about the location of the implementation of the authorization. 
+
+### Entitlement
+
+The artifact that allows access to a resource by a principal.  This is equivalant to privilege, access right, permission.  Sometimes it is called an authorization.  An etitlement can be implmented in a variety of ways.  
+
+### Enforcement 
+
+The mechanism that ensures an individual cannot perform an action or access a system when prohibited by policy. 
 
 ### Access Governance (IGA)
 
@@ -102,30 +110,46 @@ Control data that allows the Identity Management System to recognize and trust t
 Provisioning
 ------------
 
-Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these method, records are created, or updated in the identity repository, and removed from it.  Often, provisioing needs to extend to applications  to support authorization decisions.
+Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these method, records are created, or updated in the identity repository, and removed from it.  Often, provisioing needs to extend to applications  to support authorization decisions.  The term "Onboarding" is sometimes used to refer to the sum of the initial provisioning activities, in both the identity and access aspects.
+
+#### Identity Information Authorities
 
 Note that the authoritative sources for identity attributes transcend the HR system and may include the email system, phone system, training certification etc. In some cases, a company may have more than one HR system.
 
 The act of provisioning may include certain logic, best modeled as governance.  In some cases the IGA system actually takes on all the provisioning duties. 
 
-Also note, the notion of importing data does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
+#### Identity Register
 
 The Identity Register could be implemented in several ways. Common methods include the use of general-purpose databases, optimized stores such directories i.e., a physical or a virtual directory.
 
-Also shown, is the Principal and Credential Management function. This is intended to include steps needed to originate an identity (such as proofing or vetting) as well as on-going maintenance such as password reset and other credential management activities such as token provisioning. This function includes administrative activities and self-serve activities.
+Importing data does not necessarily mean making a physical copy of data, although it often does. The notion also supports the idea of virtualization - where the import of identity information is done at run-time.
 
 Also noted is the function of propagating selected information further into the ecosystem. This typically occurs when a relying services needs additional information about the users, e.g. for the purpose of access control, or personalization. The relying system makes a copy of the identity data and that is used in the application processes. A complete solution will allow for the full lifecycle including creation, update and eventual deletion of the identity data stored locally.
 
+#### Credential Services & Enrollment 
+
+This function includes steps needed to originate and activate an identity. It is also concerned with on-going maintenance such as password reset and key rotation.  This function includes administrative activities and self-serve activities.
+
+##### Enrollment
+
+Also sometimes known as Registration. It involves such activities as proofing, verfication or vetting, and recording sponsorship, if needed.  It also is responsible for the secure delivery of credentials. Enrollment ends when a user formally receives ownership of their digital identity and assumes control/ownership of their account’s credentials. 
+
+##### Credential Services
+
+Credential service include the creation and binding of passwords, cryptographic keys and other authenticators. It is also concerned with on-going maintenance such as password reset and key rotation.  It also is in charge of revoking credentials as needed.
+
+#### Just in Time
+
 So far, the provisioning function is restricted to "admin-time".  However, there are some cases where provisioning occurs at run time. 
 
-Not shown here, but sometimes implemented, are provisioning actions that occur on a just-in-time basis. This can happen when additional identity information is passed to a relying service in real-time to support a specific application requirement, possibly including identity attributes. A similar case involves the relying service querying the identity management system in order to acquire attributes.
+Not shown here, but sometimes implemented, are provisioning actions that occur on a just-in-time basis. This can happen when additional identity information is passed to a relying service in real-time to support a specific application requirement, possibly including identity attributes. A similar case involves the relying service querying the identity management system in order to acquire attributes (Shown under Authorization)
 
 ![Diagram Description automatically generated](resources/provisioning.png){width="6.268055555555556in" height="5.839583333333334in"}
 
 Authentication and sessions
 ---------------------------
 
-Authentication is the process by which a subject's credentials are used to verify their identity. The Identity Management System checks and verifies credentials that are presented to it. Typically, the Relying Service presents the credentials on behalf of the user and receives an assessment from the IMS regarding the level of certainty that the user is authentic. There are multiple scenarios.
+Authentication is the process by which a subject's credentials are used to verify their identity. The Identity Management System checks and verifies credentials that are presented to it. There are multiple scenarios. Typically, the Relying Service presents the credentials on behalf of the user and receives an assessment from the IMS regarding the level of certainty that the user is authentic. Often the assessment (and more information about the user) is delivered to the RP via a security token, which is protected by cryptography. There are several varities of security tokens.  
 
 A common pattern is to associate the authentication event with the start of a session. The session is mostly the concern of the relying system. However, it is sometimes desirable to keep the sessions supported by several relying parties in synch. For instance, logging out of one session will terminate concurrent sessions. To do this, often the Identity Management System will act to orchestrate sessions termination. In high security environments, session management must support termination based on real-time identity data such as when a user's entitlements have been modified.
 
@@ -142,31 +166,73 @@ Authorization models are many and diverse. The diagram illustrates two approache
 
 Both approaches typically use subject attributes help determine access. These values may have been provisioned into a local store, in the Provisioning process described above. Or the values can be acquired at run-time from the Identity Management System as shown by the attribute query.
 
-Many relying services perform authorization tasks internally. Often the fine-grained access control required by a protected resource makes this appealing. For instance, a financial management system may maintain a user's entitlements to specific functionality with the application.
+#### Local Authoriziation
 
-Sometimes authorization is a shared resource for many relying services. This design can improve consistency of authorization decisions and supports organizations wishing to include advanced access decisions strategies such as those required by a \"Zero Trust\" access control approach, as described by NIST 800-207. Shared authorization systems typically have a consistent approach to policy such as a standardized policy language.
+Many relying services perform authorization tasks internally. Often the fine-grained access control required by a protected resource makes this appealing. For instance, a financial management system may maintain a user's entitlements to specific functionality with the application.  In this scenario the application makes the authorization decision and implements (enforces) the result.
+
+#### Shared Authorization
+
+Sometimes authorization is a shared resource for many relying services. This design can improve consistency of authorization decisions and supports organizations wishing to include advanced access decisions strategies such as those required by a \"Zero Trust\" access control approach, as described by NIST 800-207. Shared authorization systems typically have a consistent approach to policy such as a standardized policy language. In this scenario the application ask the shared authorization function to make the decision but implements (enforces) that itself.
+
+#### Layers
+
+This distinction between local and shared authorization is not precisely the same as that between the commonly used terms "coarse-grained" and "fine-grained" access control.  Consider a web-based application that is protected by a reverse proxy.  The user logs-in a the reverse proxy which determines which applications the user has access to.  The reverse proxy implements coarse grained access control only, since the it knows nothing about the fine-grained rules implemented by the application.  
+
+### Authorization Mechanisms
+
+In either approach, the access rights may be established, maintained and revoked in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identities. Some controls rely on user attributes including group memberships or roles stored in an Identity Register. 
+
+Each mechanism relies and a particular logical data structure to implement the access control and that data structure becomes and object of engineering, although it may seem that good results derive from both art and science.  For instance, in role based access control, there is some art involved "Role Management", or defining and managing a useful set of roles, since too many roles becomes difficult to manage and too few leads to users with access to things they don't need. Similarly, in the case of policy based access control the set of policies (the Policy Rules) needs to be stored and managed.
+
+The process of setting up the system to allow for authorization is described in the next section (Access Governance).
 
 ![Diagram Description automatically generated](resources/authorization-models.png){width="6.268055555555556in" height="5.809027777777778in"}
 
-Access governance (IGA)
------------------
+## Access governance (IGA)
 
-Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identities. Some controls rely on user attributes including group memberships or roles stored in an Identity Register. Broadly speaking, the controls may also include methods such as procedures and workflows to ensure proper review.
+Access Governance provides control over access rights implemented in multiple local or shared authorization systems. This control is often broken into the administration of these rights and the oversight needed to ensure that these rights are in good order over time.  While this is logically separate from Provisioning, some organizations find it useful to group IGA and Provisioning together under an organzational unit charged with both.
+
+#### Control  
+
+Broadly speaking, the controls may also include methods such as procedures and workflows to ensure proper review
 
 Often deployed to prevent internal fraud is the control labeled segregation of duties.  The control defines groups of access rights that cannot be held by the same person.  This is best done in a location that has visability to all the implicated access rights, i.e. the IGA system.
 
-Typically, governance activities review and may modify the data in one or more of the authorization components in order to effect a change in entitlements.
+#### Oversight
+
+Typically, governance activities review and may modify the data in one or more of the authorization components in order to effect a change in entitlements.  Often organizations will have formal process to review existing entitlements and may require a responsible party to certify or attest that the entitlements are in good order.  Addition tools which provide include evidence that IAM policies are effective at enforcing their stated control include internal and external audits as well as analytic reports.
 
 Access Governance is required in enterprise systems focusing on management of staff (employee/contractor) entitlements. The concept can also apply to customer facing scenarios such as business to business delegated rights or business to customer scenarios where delegation such as power of attorney or other agents are required.
 
+
+
 ![Diagram Description automatically generated](resources/access-governance.png){width="6.268055555555556in" height="5.809027777777778in"}
 
-Risk Context
-------------
+### Risk Context
 
-Risk context information can be valuable to improve the security of the relying service. For example, An authentication or authorization decision may be influenced by specific criteria such as whether an the request is coming from a known or unknown network, or if it is outside the normal usage patterns for a given individual. 
+Risk context information can be valuable to improve the security of the relying service. Risk can be judged based on information in the request, information about the history of the user, or assertions/evidence from third parties.
 
-Such an example depends on signals from the local environment, but it is also possible to obtain signals from further afield.  For example,it is possible to determine commonly used passwords based on postings on the "dark-web".   Bad actors purchase these in the hope that users will use the same password at other sites.  A counter measure is for the Identity Management System operator to require additional certainty if one of those passwords were presented.
+#### Examples: Information in the request
+
+#### Boundary control
+
+An authentication or authorization decision may be influenced by specific criteria such as whether an the request is coming from a known or unknown network.  A more sophisticated version of this attempts to prohibit access from, say certain countries.
+
+#### Examples: Historical usage
+
+##### Usage pattern match
+
+Determine if this request is outside the normal usage patterns for a given individual. The reference to historical usage patterns allows for pattern detection and can help establish a metric for risk for a user, in general, or for a specific transaction.  Such activity can be called risk profiling.
+
+##### Land speed violation
+
+By amending the user's request and history with location information, it is possible identify likely compromised account due to the fact that the user can't be in two places at one.
+
+Such examples depends on signals from the local environment, but it is also possible to obtain signals from further afield.  
+
+#### Example: Third party 
+
+it is possible to determine commonly used passwords based on postings on the "dark-web".   Bad actors purchase these in the hope that users will use the same password at other sites.  A counter measure is for the Identity Management System operator to require additional certainty if one of those passwords were presented.
 
 External events may be visible to the Identity Management System operator through consortia or vendor packages. In some mutual-support scenarios, it may be possible for the IMS operator to also publish events for the benefit of others, supporting a relying party's risk management requirement.
 
@@ -193,6 +259,14 @@ Discovery refers to protocols that facilitate automation. For instance OpenID Co
 
 ![Diagram Description automatically generated](resources/metadata-discovery.png){width="6.268055555555556in" height="4.636805555555555in"}
 
+### Acknowlegements
+
+Thanks to 
+
+Ian Glazer, Graham Williamson, and Corey Scholefeld for detailed review
+
+Jon Lehtinen and Steve Hutchinson for some of the definitions from their unpublished Introduction to Identity Part 3 document.
+
 References
 ----------
 
@@ -201,4 +275,4 @@ References
 3. Internet 2 [[https://playbooks.idmanagement.gov/arch/components/]{.underline}](https://playbooks.idmanagement.gov/arch/components/)
 4.  NIST Zero Trust [[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf]{.underline}](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf)
 5. OpenID Connect discovery  https://openid.net/specs/openid-connect-discovery-1_0.html
-6. 
+6. NIST SP-800-63
