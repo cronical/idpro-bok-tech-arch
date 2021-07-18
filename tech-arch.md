@@ -1,8 +1,6 @@
-IAM Reference Architecture Model
-================================
+# IAM Reference Architecture Model
 
-Abstract
---------
+## Abstract
 
 This article provides a reference model to organize the presentation of technical details associated with various implementations of identity and access management (IAM) architectural concepts. The model is conceptual, as are the set of abstract components which it provides. 
 
@@ -14,8 +12,7 @@ Some of the ISO/IEC names have been changed to reflect more common usage. In som
 
 The model has been reviewed in conjunction with the FICAM, Internet 2, NIST SP-800-63 definitions, and NIST Zero Trust frameworks and with the Identity Stack presented at Identiverse 2019 in an attempt to adopt the most useful terminology.
 
-Introduction
-------------
+## Introduction
 
 The following is the basic organization of an identity management system (IMS), supporting multiple relying services, or relying parties (RP).
 
@@ -34,14 +31,33 @@ A modern architecture may have a web-hosted application (the RP) that calls an I
 #### Example 2
 A computer's file system (RP) provides access control based on the user information acquired at login (IMS). Despite both the file system and the identity management function being encapsulated in an operating system, the model holds.
 
-Terminology
------------
+### Trust Anchor
+
+This component represents the legal, organizational and technical apparatus that enables trust between the Identity Management System and the Relying Parties.  When the IMS and the RP are not in the same organization this may take on a salient aspect; when they are in the same organization the agreements may be more tacit.  When the IMS and RP are both built into a single system the root of trust my be hidden in the system internals.
+
+#### Root of Trust
+
+There is a need for a technical root of trust. This is done through a Public Key Infrastructure (PKI).  The parties agree to trust a common certificate authority which signs the certificates of all parties in the federation. 
+
+#### Trust Framework
+
+A trust framework is the set of rules and policies that govern how the federation members will operate and interact  [NISTIR 8149].  In simple cases this may be a contract between two parties.  In other cases it is the basis of a multilateral agreement. 
+
+#### Interoperations
+
+To operate well, the parties of a federation establish mutual agreement upon an acceptable identity to be used between the parties in a federated relationship (for instance the level of assurance used).  In addition, the definition and values of attributes of federated identities should be agreed.  The parties should agree on the security/access policies of federated users between the parties in a federated relationship.  For instance, are there duties to notifiy others in the event of security failures.
+
+## Terminology
 
 The terms are defined below and provided with abbreviations to facilitate reference in the use-cases.
 
 ### Identity Management System (IMS)
 
 A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components.  The IMS is shown with a dotted line to indicate that it is a conceptual grouping of components, not a full fledged system in itself.
+
+### Trust Anchor
+
+This component represents the legal, organizational and technical apparatus that enables trust between the Identity Management System and the Relying Parties.  
 
 ### Relying  Party (RP)
 
@@ -146,8 +162,7 @@ Not shown here, but sometimes implemented, are provisioning actions that occur o
 
 ![Diagram Description automatically generated](resources/provisioning.png){width="6.268055555555556in" height="5.839583333333334in"}
 
-Authentication and sessions
----------------------------
+## Authentication and sessions
 
 Authentication is the process by which a subject's credentials are used to verify their identity. The Identity Management System checks and verifies credentials that are presented to it. There are multiple scenarios. Typically, the Relying Service presents the credentials on behalf of the user and receives an assessment from the IMS regarding the level of certainty that the user is authentic. Often the assessment (and more information about the user) is delivered to the RP via a security token, which is protected by cryptography. There are several varities of security tokens.  
 
@@ -159,8 +174,7 @@ Sessions also support another important concept: step-up authentication. A sessi
 
 ![Diagram Description automatically generated](resources/authentication-and-sessions.png){width="6.268055555555556in" height="4.636805555555555in"}
 
-Authorization
--------------
+## Authorization
 
 Authorization models are many and diverse. The diagram illustrates two approaches for authorization.
 
@@ -244,8 +258,7 @@ The linkage from the IMS Audit Repository illustrates that the Risk Context cons
 
 ![Diagram Description automatically generated](resources/risk-context.png){width="6.268055555555556in" height="5.815277777777778in"}
 
-Metadata and Discovery
-----------------------
+## Metadata and Discovery
 
 Metadata refers to control data that allows the Identity Management System and the Relying Parties to interoperate. 
 
@@ -267,8 +280,7 @@ Ian Glazer, Graham Williamson, and Corey Scholefeld for detailed review
 
 Jon Lehtinen and Steve Hutchinson for some of the definitions from their unpublished Introduction to Identity Part 3 document.
 
-References
-----------
+## References
 
 1. ISO/IEC 24760-2:2015(E) Figure C.1 provided the starting point.  ISO/IEC 24760-1 Second edition provided improved naming and granularity (specifically breaking out CSP and Enrolment)
 2. FICAM [[https://playbooks.idmanagement.gov/arch/components/]{.underline}](https://playbooks.idmanagement.gov/arch/components/)
@@ -276,3 +288,4 @@ References
 4.  NIST Zero Trust [[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf]{.underline}](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf)
 5. OpenID Connect discovery  https://openid.net/specs/openid-connect-discovery-1_0.html
 6. NIST SP-800-63
+7. NISTIR 8149 https://nvlpubs.nist.gov/nistpubs/ir/2018/NIST.IR.8149.pdf

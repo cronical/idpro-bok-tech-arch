@@ -1,4 +1,4 @@
-basic-component-dependencies (background, dependency, border-small)
+basic-component-dependencies (background, dependency, border-large)
 provisioning (background, enrolment, provisioning, governance, border-large)
 authentication-and-sessions (background, authN-session, border-small)
 authorization-models (background, authz, border-large)
