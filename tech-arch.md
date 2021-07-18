@@ -14,9 +14,37 @@ The model has been reviewed in conjunction with the FICAM, Internet 2, NIST SP-8
 
 ## Introduction
 
+## Terminology
+
+The terms are defined below and provided with abbreviations to facilitate reference in the use-cases.
+
+
+| **Item**                                 | **Definition** |
+| ---------------------------------------- | ------------------------|
+| **Access Governance (IGA)**              | Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identies. The abbreviation used is for Identity Governance and Administration and is commonly used in the commercial sector. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. IGA is not specifically addressed in the ISO/IEC model. |
+| **Attribute Provider**                   | A type of IIA. Sometimes the authority for attributes is distinguished from the authority for identities. In this case the term Attribute Provider is sometimes used.    |
+| **Authentication (AUTHN)**               | The act of determining that the principal/subject is authentic to a level of assurance. Depending on the architecture this function may also produce a security token to convey authentication information securely to the RP.  |
+| **Authorization (AUTHZ)**                | Authorization is how a decision is made at run-time to allow someone to access a resource. This is not included in the ISO or Internet 2 models. The FICAM framework includes this as a subcomponent of the Access Management System and is more explicit about the location of the implementation of the authorization.  |
+| **Credential**                           | A credential allows for authentication of an entity by binding an identity to an authenticator.|
+| **Credential Service Provider (CSP)**    | Following NIST 800-63-3 we include both the enrollment function and credential services together under the name Credential Services Provider.  |
+| **Credential Services**                  | Credential Services issue or register the subscriber authenticators, delivers the credential for use, and subsequently manages the credentials. FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation. We follow FICAM in this model: so the subscriber will include system components that need certificates and private keys. |
+| **Enforcement**                          | The mechanism that ensures an individual cannot perform an action or access a system when prohibited by policy. |
+| **Enrollment**                           | Also known as Registration. Enrollment is concerned with the proofing, and lifecycle aspects of the principal (or subject). The entity that performs enrollment has sometimes been known as a Registration Authority, but we (following NIST) will use the term Credential Service Provider. |
+| **Entitlement**                          | The artifact that allows access to a resource by a principal. This is equivalant to privilege, access right, permission. Sometimes it is called an authorization. An etitlement can be implmented in a variety of ways.  |
+| **Identity Information Authority (IIA)** | This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP. Here we mean this term to include the service that actually provides the information as well as the root authority. Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2. |
+| **Identity Management System (IMS)**     | A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components. The IMS is shown with a dotted line to indicate that it is a conceptual grouping of components, not a full fledged system in itself.|
+| **Identity Register**                    | This is the data store that contains the enrolled entities, and their attributes. In this model we use the singular, as if it were one singular database. In practice designs may store some attributes separate from identities. We also use this to include the storage related to credentials, although in practice, all or some of the credentials may be stored in their own physical repository. Identity Registers by their nature have high availability requirements, so often at the physical level they contain multiple instances which are synchronized. The term Attribute Store is sometimes used as a synonym.                                                     |
+| **Metadata (META)**                      | Control data that allows the Identity Management System to recognize and trust the Relying Service. This corresponds to Relying Party data in the Internet 2 model. |
+| **Relying Party (RP)**                   | A component, system or application that uses the IMS to identify its users. The RP has its own resources and logic. This is also known as the Relying Service in the ISO/IEC model. This roughly corresponds to the Agency Endpoint in the FICAM model, or to Identity Consumers in the Internet2 model. |
+| **Risk Context (RCTX)**                  | Risk Context consists of additional facts that can be brought to bear to improve the overall security of the ecosystem. Internal or external events and facts can be applied to enable, limit, or terminate access. This is similar to the section Monitors and Sensors under FICAM's Governance Systems, and, NIST 800-207 (Zero Trust) to many of the inputs of the Policy Decision Point as shown in Figure 2.     |
+| **Session (SESS)**                       | A period of time after an authentication event when an RSVC grants access to the principal/subject. |
+| **Trust Anchor**                         | This component represents the legal, organizational and technical apparatus that enables trust between the Identity Management System and the Relying Parties.            |
+
+## Basic Structure of the Model
+
 The following is the basic organization of an identity management system (IMS), supporting multiple relying services, or relying parties (RP).
 
-![Diagram Description automatically generated](resources/basic-component-dependencies.png){width="6.268055555555556in" height="4.636805555555555in"}
+![Basic Component Dependencies the identity management system supports multiple relying parties.  The core components of the IMS are shown.  The dotted arrowed lines show dependencies.](resources/basic-component-dependencies.png){width="6.268055555555556in" height="4.636805555555555in"}
 
 The most basic function of the identity system is to provide secure storage of the information about identities and a way for relying  parties, to use that data to control access to resources. Note that the term Relying Service is used by ISO/IEC to encompass all types of components that use identity services, including systems, sub-systems, and applications, independent of the domain or operator.  We will use the more common Relying Party (or RP).
 
@@ -25,6 +53,7 @@ The audit repository is shown since that is perhaps one of the most salient aspe
 While, it is possible to have an identity management system that is populated without attaching to an external data service, this is typically not the case. Usually, employee or customer data needs to be imported.
 
 The model can be used at different levels. Here are a couple of examples:
+
 #### Example 1
 A modern architecture may have a web-hosted application (the RP) that calls an Identity as a Service (IDaaS) cloud identity service, acting as the Identity Management System. The RP in this case could be a customer facing application or a workforce facing application.
 
@@ -47,94 +76,19 @@ A trust framework is the set of rules and policies that govern how the federatio
 
 To operate well, the parties of a federation establish mutual agreement upon an acceptable identity to be used between the parties in a federated relationship (for instance the level of assurance used).  In addition, the definition and values of attributes of federated identities should be agreed.  The parties should agree on the security/access policies of federated users between the parties in a federated relationship.  For instance, are there duties to notifiy others in the event of security failures.
 
-## Terminology
-
-The terms are defined below and provided with abbreviations to facilitate reference in the use-cases.
-
-### Identity Management System (IMS)
-
-A set of policies, procedures, technology, and other resources for maintaining identity information. In this model it contains information about principals/subjects including credentials. It also including other data such as meta data to enable interoperability with other components.  The IMS is shown with a dotted line to indicate that it is a conceptual grouping of components, not a full fledged system in itself.
-
-### Trust Anchor
-
-This component represents the legal, organizational and technical apparatus that enables trust between the Identity Management System and the Relying Parties.  
-
-### Relying  Party (RP)
-
-A component, system or application that uses the IMS to identify its users. The RP has its own resources and logic. This is also known as the Relying Service in the ISO/IEC model. This roughly corresponds to the Agency Endpoint in the FICAM model, or to Identity Consumers in the Internet2 model.
-
-### Identity Information Authority (IIA)
-
-This represents one or more data sources that are used by the IMS as the basis for the master set of principal/subject identity records. Each IIA may supply a subset of records and a subset of attributes. Sometimes the IIA is distinguished from the Identity Information Provider or IIP.  Here we mean this term to include the service that actually provides the information as well as the root authority.   Here we use this term to include both. This corresponds to Identity Information Source in ISO/IEC 24760-2, and Identity Sources in Internet 2.
-
-### Attribute Provider
-
-A type of IIA. Sometimes the authority for attributes is distinguished from the authority for identities.  In this case the term Attribute Provider is sometimes used. 
-
-### Enrollment 
-
-Also known as Registration. Enrollment is concerned with  the proofing, and lifecycle aspects of the principal (or subject).  The entity that performs enrollment has sometimes been known as a Registration Authority, but we (following NIST) will use the term Credential Service Provider.
-
-### Credential
-
-A credential allows for authentication of an entity by binding an identity to an authenticator.  
-
-### Credential Services
-
-Credential Services  issue or register the subscriber authenticators, delivers  the credential for use, and subsequently manages the credentials.   FICAM separates this into a first-class component called Credential Management System, which also includes PKI information for federation.  We follow FICAM in this model: so the subscriber will include system components that need certificates and private keys.  
-
-### Credential Service Provider (CSP)
-
-Following NIST 800-63-3 we include both the enrollment function and credential services together under the name Credential Services Provider.
-
-### Identity Register
-
-This is the data store that contains the enrolled entities, and their attributes.  In this model we use the singular, as if it were one singular database.  In practice designs may store some attributes separate from identities. We also use this to include the storage related to credentials, although in practice, all or some of the credentials may be stored in their own physical repository.  Identity Registers by their nature have high availability requirements, so often at the physical level they contain multiple instances which are synchronized.  The term Attribute Store is sometimes used as a synonym.
-
-### Authentication (AUTHN)
-
-The act of determining that the principal/subject is authentic to a level of assurance. Depending on the architecture this function may also produce a security token to convey authentication information securely to the RP.
-
-### Session (SESS)
-
-A period of time after an authentication event when an RSVC grants access to the principal/subject.
-
-### Authorization (AUTHZ)
-
-Authorization is how a decision is made at run-time to allow someone to access a resource. This is not included in the ISO or Internet 2 models. The FICAM framework includes this as a subcomponent of the Access Management System and is more explicit about the location of the implementation of the authorization. 
-
-### Entitlement
-
-The artifact that allows access to a resource by a principal.  This is equivalant to privilege, access right, permission.  Sometimes it is called an authorization.  An etitlement can be implmented in a variety of ways.  
-
-### Enforcement 
-
-The mechanism that ensures an individual cannot perform an action or access a system when prohibited by policy. 
-
-### Access Governance (IGA)
-
-Access Governance provides oversight and control over access rights implemented in multiple local or shared authorization systems. These rights may be controlled in a variety of ways, starting with the existence and validity of the digital identity. Other controls include various mechanisms such as policies, the mapping of roles, permissions, and identies.  The abbreviation used is for Identity Governance and Administration and is commonly used in the commercial sector. This roughly corresponds to the Access Certification section of the first-class component Governance Systems in the FICAM model. IGA is not specifically addressed in the ISO/IEC model.
-
-### Risk Context (RCTX)
-
-Risk Context consists of additional facts that can be brought to bear to improve the overall security of the ecosystem. Internal or external events and facts can be applied to enable, limit, or terminate access. This is similar to the section Monitors and Sensors under FICAM\'s Governance Systems, and, NIST 800-207 (Zero Trust) to many of the inputs of the Policy Decision Point as shown in Figure 2.
-
-### Metadata (META)
-
-Control data that allows the Identity Management System to recognize and trust the Relying Service. This corresponds to Relying Party data in the Internet 2 model.
-
-Provisioning
-------------
+## Provisioning
 
 Provisioning is a term that encompases the processes and methods that create, modify, and, eventually, delete the identity and profile information used by IT infrastructure and business applications. By these method, records are created, or updated in the identity repository, and removed from it.  Often, provisioing needs to extend to applications  to support authorization decisions.  The term "Onboarding" is sometimes used to refer to the sum of the initial provisioning activities, in both the identity and access aspects.
 
-#### Identity Information Authorities
+![Provisioning: The Identity register receives updates from one or more external sources and administrative actions, passing the information on as needed.  ](resources/provisioning.png){width="6.268055555555556in" height="5.839583333333334in"}
+
+### Identity Information Authorities
 
 Note that the authoritative sources for identity attributes transcend the HR system and may include the email system, phone system, training certification etc. In some cases, a company may have more than one HR system.
 
 The act of provisioning may include certain logic, best modeled as governance.  In some cases the IGA system actually takes on all the provisioning duties. 
 
-#### Identity Register
+### Identity Register
 
 The Identity Register could be implemented in several ways. Common methods include the use of general-purpose databases, optimized stores such directories i.e., a physical or a virtual directory.
 
@@ -142,29 +96,32 @@ Importing data does not necessarily mean making a physical copy of data, althoug
 
 Also noted is the function of propagating selected information further into the ecosystem. This typically occurs when a relying services needs additional information about the users, e.g. for the purpose of access control, or personalization. The relying system makes a copy of the identity data and that is used in the application processes. A complete solution will allow for the full lifecycle including creation, update and eventual deletion of the identity data stored locally.
 
-#### Credential Services & Enrollment 
+### Credential Services & Enrollment 
 
 This function includes steps needed to originate and activate an identity. It is also concerned with on-going maintenance such as password reset and key rotation.  This function includes administrative activities and self-serve activities.
 
-##### Enrollment
+#### Enrollment
 
 Also sometimes known as Registration. It involves such activities as proofing, verfication or vetting, and recording sponsorship, if needed.  It also is responsible for the secure delivery of credentials. Enrollment ends when a user formally receives ownership of their digital identity and assumes control/ownership of their account’s credentials. 
 
-##### Credential Services
+#### Credential Services
 
 Credential service include the creation and binding of passwords, cryptographic keys and other authenticators. It is also concerned with on-going maintenance such as password reset and key rotation.  It also is in charge of revoking credentials as needed.
 
-#### Just in Time
+### Just in Time
 
 So far, the provisioning function is restricted to "admin-time".  However, there are some cases where provisioning occurs at run time. 
 
 Not shown here, but sometimes implemented, are provisioning actions that occur on a just-in-time basis. This can happen when additional identity information is passed to a relying service in real-time to support a specific application requirement, possibly including identity attributes. A similar case involves the relying service querying the identity management system in order to acquire attributes (Shown under Authorization)
 
-![Diagram Description automatically generated](resources/provisioning.png){width="6.268055555555556in" height="5.839583333333334in"}
+
 
 ## Authentication and sessions
 
-Authentication is the process by which a subject's credentials are used to verify their identity. The Identity Management System checks and verifies credentials that are presented to it. There are multiple scenarios. Typically, the Relying Service presents the credentials on behalf of the user and receives an assessment from the IMS regarding the level of certainty that the user is authentic. Often the assessment (and more information about the user) is delivered to the RP via a security token, which is protected by cryptography. There are several varities of security tokens.  
+Authentication is the process by which a subject's credentials are used to verify their identity. The Identity Management System checks and verifies credentials that are presented to it. There are multiple scenarios. Typically, the Relying Service presents the credentials on behalf of the user and receives an assessment from the IMS regarding the level of certainty that the user is authentic. Often the assessment (and more information about the user) is delivered to the RP via a security token, which is protected by cryptography. There are several varities of security tokens.
+
+
+![Authentication and Sessions:  The  Identity Register supports authentication scenarios.  The IMS may monitor or participate if the full session lifecycle with the Relying services.](resources/authentication-and-sessions.png){width="6.268055555555556in" height="4.636805555555555in"}
 
 A common pattern is to associate the authentication event with the start of a session. The session is mostly the concern of the relying system. However, it is sometimes desirable to keep the sessions supported by several relying parties in synch. For instance, logging out of one session will terminate concurrent sessions. To do this, often the Identity Management System will act to orchestrate sessions termination. In high security environments, session management must support termination based on real-time identity data such as when a user's entitlements have been modified.
 
@@ -172,13 +129,15 @@ The existence of a centralized point of view about sessions, can be leveraged to
 
 Sessions also support another important concept: step-up authentication. A session can keep track of the level of assurance of a particular authentication, so when a user requests access to a transaction or application requiring a higher level of identity assurance, the Identity Management System can be prepared to determine the course of action, such as improving the certainty that the user is the right person by asking the user provide additional evidence.  For example, maybe the password is good enough to review some information but to withdraw money the additional factor of of a one-time password from a phone app is required. The detection of the assurance gap and subsequent action could be done at the relying system, but that would end up with a poor user experience if multiple relying systems with step-up needs were in play.
 
-![Diagram Description automatically generated](resources/authentication-and-sessions.png){width="6.268055555555556in" height="4.636805555555555in"}
+
 
 ## Authorization
 
 Authorization models are many and diverse. The diagram illustrates two approaches for authorization.
 
 Both approaches typically use subject attributes help determine access. These values may have been provisioned into a local store, in the Provisioning process described above. Or the values can be acquired at run-time from the Identity Management System as shown by the attribute query.
+
+![Authorization models:  Some RPs  perform authorization tasks internally.   Sometimes authorization is a shared resource for many RPs. ](resources/authorization-models.png){width="6.268055555555556in" height="5.809027777777778in"}
 
 #### Local Authoriziation
 
@@ -200,11 +159,13 @@ Each mechanism relies and a particular logical data structure to implement the a
 
 The process of setting up the system to allow for authorization is described in the next section (Access Governance).
 
-![Diagram Description automatically generated](resources/authorization-models.png){width="6.268055555555556in" height="5.809027777777778in"}
+
 
 ## Access governance (IGA)
 
 Access Governance provides control over access rights implemented in multiple local or shared authorization systems. This control is often broken into the administration of these rights and the oversight needed to ensure that these rights are in good order over time.  While this is logically separate from Provisioning, some organizations find it useful to group IGA and Provisioning together under an organzational unit charged with both.
+
+![Access Governance provides oversight and control over access rights implemented in many Local authorization systems and, sometimes, in Shared authorization systems. ](resources/access-governance.png){width="6.268055555555556in" height="5.809027777777778in"}
 
 #### Control  
 
@@ -218,13 +179,11 @@ Typically, governance activities review and may modify the data in one or more o
 
 Access Governance is required in enterprise systems focusing on management of staff (employee/contractor) entitlements. The concept can also apply to customer facing scenarios such as business to business delegated rights or business to customer scenarios where delegation such as power of attorney or other agents are required.
 
-
-
-![Diagram Description automatically generated](resources/access-governance.png){width="6.268055555555556in" height="5.809027777777778in"}
-
 ### Risk Context
 
 Risk context information can be valuable to improve the security of the relying service. Risk can be judged based on information in the request, information about the history of the user, or assertions/evidence from third parties.
+
+![Risk Context It is possible to use risk information in authentication decisions.  For instance, if a stolen password is found on the dark web, don't allow login.](resources/risk-context.png){width="6.268055555555556in" height="5.815277777777778in"}
 
 #### Examples: Information in the request
 
@@ -256,11 +215,13 @@ As shown in the diagram, shared authorization systems may consume risk data as w
 
 The linkage from the IMS Audit Repository illustrates that the Risk Context consumes one or more inputs to the trust algorithm. (See NIST 800-207).
 
-![Diagram Description automatically generated](resources/risk-context.png){width="6.268055555555556in" height="5.815277777777778in"}
+
 
 ## Metadata and Discovery
 
 Metadata refers to control data that allows the Identity Management System and the Relying Parties to interoperate. 
+
+![Metadata and discovery these two functions are involved with mutual recognition of the Identity Management System and Relying Service.](resources/metadata-discovery.png){width="6.268055555555556in" height="4.636805555555555in"}
 
 One example is the registration of public key certificates to enable mutual authentication. In some scenarios this information is shared between the parties manually.  
 
@@ -270,7 +231,7 @@ The metadata may include information that limits the types of interactions and s
 
 Discovery refers to protocols that facilitate automation. For instance OpenID Connect defines a method for relying parties  to locate an end-point where a user's identity can be verified. A Discovery service can advise where specific data can be accessed and which end-points are maintained to allow a relying party to use the identity service.
 
-![Diagram Description automatically generated](resources/metadata-discovery.png){width="6.268055555555556in" height="4.636805555555555in"}
+
 
 ### Acknowlegements
 
