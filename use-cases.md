@@ -33,9 +33,7 @@ The list of use-case articles is intended to grow over time. \[seeded 5/20/21 - 
 
 #### Function: Authentication
 
-1.  Basic *nix login with password (examines password hashes)
-2.  Employee logs in to Windows domain - Kerberos
-
+1.  Employee logs in to Windows domain - Kerberos
 3.  Customer logs in from web browser - OpenID Connect
 
 4.  Cloud service authenticates via delegation - SAML

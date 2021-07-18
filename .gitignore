@@ -2,3 +2,4 @@ conn_points.txt
 ~$*.docx
 *.mdbak
 resources/*.docx
+output/*.json
