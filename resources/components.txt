@@ -1,0 +1,15 @@
+Access Governance (IGA)
+Access Management
+Attribute Provider
+Audit Repository
+AuthN / Assertion
+Shared or Local Authorization (AuthZ)
+Credential Service Provider (CSP)
+Identity Information Authority (IIA)
+Identity Management (IDM)
+Identity Register
+Metadata Management
+Relying Party (RP)
+Risk Context (RCTX)
+Session Management
+Trust Anchor

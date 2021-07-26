@@ -7,7 +7,7 @@ To retain context from \"Introduction to IAM Architecture,\" IDPro Body of Knowl
 
 The use-case articles follow a common structure:
 
--   Use-case name
+-   Use-case name, which will be the title of the article
 
 -   Architecture Type or types Host, Client-Server, N-tier, Hub & Spoke, Remote Access, Cloud Environments
 
