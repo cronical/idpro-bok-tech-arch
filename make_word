@@ -1,3 +1,6 @@
 #!/bin/zsh
 #create MS Word file from the markdown
 pandoc -s -f markdown -t docx -o output/tech-arch.docx --data-dir=resources/ tech-arch.md --log=output/pandoc_log.json
+cd use-cases/authn-saml/
+pandoc -s -f markdown -t docx -o ../../output/authn-saml.docx --data-dir=../../resources/ authn-saml.md --log=../../output/pandoc_log.json
+cd ../..
