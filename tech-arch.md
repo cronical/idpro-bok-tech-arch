@@ -1,5 +1,5 @@
 ---
-title: IAM Reference Architecture Model
+title: IAM Reference Architecture
 author: George B. Dobbs
 ---
 
