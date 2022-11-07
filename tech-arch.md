@@ -15,7 +15,7 @@ It has been said that all models are wrong but some are useful.[Wikipedia - all 
 
 The model has a technical slant, but it necessarily touches on some of the process, legal, and capability dimensions as well.  This is intended to give the reader a set of concepts that can be applied when thinking about identity and access management.  
 
-The model is based on the idea that the management of identities and access can (mostly) be separated from their use.  This concept can apply to distributed systems as well as self-contained systems.  So when you see IAM working together with, say, an application it may mean that these are separate physical systems or it could mean these parts are separate pieces of software running on a single system.
+The model is based on the idea that the management of identities and access can (mostly) be separated from their use.  This concept can apply to distributed systems as well as self-contained systems.  So when you see identity and access management (IAM) working together with, say, an application it may mean that these are separate physical systems or it could mean these parts are separate pieces of software running on a single system.
 
 The main goal of this article is allow consistent discussion of more specific use-cases. 
 
@@ -28,14 +28,14 @@ In an attempt to adopt the most useful terminology, the model has been reviewed 
 The model can be used at different levels. Here are a couple of examples:
 
 ## Example 1: Distributed Systems
-A modern architecture may have a web-hosted application (the RP) which relies on a cloud identity service (the Identity Provider). The RP in this case could be a customer facing application or a workforce facing application.
+A modern architecture may have a web-hosted application, the Relying Party (RP), which relies on a cloud identity service acting as the Identity Provider (IDP). The RP in this case could be a customer facing application or a workforce facing application.
 
 ## Example 2: Single System
 A computer's file system (the RP) provides access control based on the user information acquired at login (the IDP). In this case both the file system and the identity management function are encapsulated in an operating system.
 
 # Terminology
 
-The terms are defined below. Those with a ✓ mark are the abstract components that comprise the model.
+The terms are defined below. Those with a check mark (✓) are the abstract components that comprise the model. This may be used to help cross-reference to the model components, for instance, in the diagrams.
 
 | **Item**                                 | **Definition** |
 | ---------------------------------------- | ------------------------|
@@ -77,7 +77,7 @@ Identity Management (IDM) is a set of policies, procedures, technology, and othe
 
 ## Relying Party
 
-The Relying Parting (RP) is a component, system or application that uses the IDM to identify its users. The RP has its own resources and logic. It comes in many forms, all of which use identity services, including systems, sub-systems, and applications, independent of the domain or operator.
+The Relying Parting (RP) is a component, system or application that uses the IDM system to identify its users. The RP has its own resources and logic. It comes in many forms, all of which use identity services, including systems, sub-systems, and applications, independent of the domain or operator.
 
 ## Trust Anchor
 
